@@ -49,10 +49,10 @@ sed -i '/^matplotlib.use('\''Agg'\'')$/a\from matplotlib import pyplot as plt' $
 ${SPARK_HOME}/bin/spark-submit \
         --master ${MASTER} \
         --driver-cores 2  \
-        --driver-memory 16g  \
+        --driver-memory 18g  \
         --total-executor-cores 2  \
         --executor-cores 2  \
-        --executor-memory 16g \
+        --executor-memory 18g \
         --conf spark.akka.frameSize=64 \
         --py-files ${ANALYTICS_ZOO_PYZIP},${ZOO_TUTORIALS}//keras/tmp_test.py  \
         --properties-file ${ANALYTICS_ZOO_CONF} \
@@ -155,7 +155,7 @@ echo "#6 5.1-introduction-to-convnets"
 #timer
 start=$(date "+%s")
 ${ZOO_TUTORIALS}/keras/ipynb2py.sh ${ZOO_TUTORIALS}/keras/5.1-introduction-to-convnets
-sed "s/nb_epoch=5/nb_epoch=5/g" ${ZOO_TUTORIALS}/keras/5.1-introduction-to-convnets.py >${ZOO_TUTORIALS}/keras/tmp_test.py
+sed "s/nb_epoch=5/nb_epoch=2/g" ${ZOO_TUTORIALS}/keras/5.1-introduction-to-convnets.py >${ZOO_TUTORIALS}/keras/tmp_test.py
 sed -i "s/get_ipython()/#/g" ${ZOO_TUTORIALS}/keras/tmp_test.py
 ${SPARK_HOME}/bin/spark-submit \
         --master ${MASTER} \
@@ -181,7 +181,7 @@ echo "#7 6.2-understanding-recurrent-neural-networks"
 #timer
 start=$(date "+%s")
 ${ZOO_TUTORIALS}/keras/ipynb2py.sh ${ZOO_TUTORIALS}/keras/6.2-understanding-recurrent-neural-networks
-sed "s/nb_epoch=10/nb_epoch=10/g" ${ZOO_TUTORIALS}/keras/6.2-understanding-recurrent-neural-networks.py >${ZOO_TUTORIALS}/keras/tmp_test.py
+sed "s/nb_epoch=10/nb_epoch=4/g" ${ZOO_TUTORIALS}/keras/6.2-understanding-recurrent-neural-networks.py >${ZOO_TUTORIALS}/keras/tmp_test.py
 sed -i "s/get_ipython()/#/g" ${ZOO_TUTORIALS}/keras/tmp_test.py
 sed -i "s/import matplotlib.pyplot as plt/import matplotlib/g" ${ZOO_TUTORIALS}/keras/tmp_test.py
 sed -i '/^import matplotlib$/a\matplotlib.use('\''Agg'\'')' ${ZOO_TUTORIALS}/keras/tmp_test.py
