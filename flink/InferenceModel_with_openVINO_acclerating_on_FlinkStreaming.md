@@ -1,9 +1,9 @@
-# Analytics-Zoo InferenceModel with openVINO acclerating  on Flink Streaming 
+# Analytics-Zoo InferenceModel with openVINO accelerating  on Flink Streaming 
 
-`model-inference-flink` is the model inference in batch and streaming with flink. This is the example of batch and streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel to acclerate prediction. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/ImageClassificationStreaming.scala) for the whole program.
+`model-inference-flink` is the model inference in batch and streaming with flink. This is the example of batch and streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel to accelerate prediction. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/ImageClassificationStreaming.scala) for the whole program.
 
 ## Getting started Aalytics-Zoo InferenceModel
-Define a class extended analytics-zoo `InferenceModel`. It allows to pass modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
+Define a class extended analytics-zoo `InferenceModel`. It allows passing modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
 This is the sample of defining a `Resnet50InferenceModel` class. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50InferenceModel.scala) for the whole program.
 
 ```
@@ -39,7 +39,7 @@ List(data).asJava
 })
 ```
 ### Specifying Transformation Functions
-Define a class extends `RichMapFunction`. Three main methods of rich function in this example are open, close and map. `open()` is initialization method. `close()` is called after the last call to the the main working methods. `map()` is the user-defined function, mapping an element from the input data set and to one exact element, ie, `JList[JList[JTensor]]`.
+Define a class extends `RichMapFunction`. Three main methods of rich function in this example are open, close and map. `open()` is initialization method. `close()` is called after the last call to the main working methods. `map()` is the user-defined function, mapping an element from the input data set and to one exact element, ie, `JList[JList[JTensor]]`.
 ```
 import org.apache.flink.api.common.functions.RichMapFunction
 class ModelPredictionMapFunction(modelType: String, modelBytes: Array[Byte], inputShape: Array[Int], ifReverseInputChannels: Boolean, meanValues: Array[Float], scale: Float) extends RichMapFunction[JList[JList[JTensor]], JList[JList[JTensor]]] {
