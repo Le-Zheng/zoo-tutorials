@@ -1,8 +1,11 @@
 # Analytics-Zoo InferenceModel with openVINO acclerating  on Flink Streaming 
+
 `model-inference-flink` is the model inference in batch and streaming with flink. This is the example of batch and streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel to acclerate prediction. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/ImageClassificationStreaming.scala) for the whole program.
-##Getting started Aalytics-Zoo InferenceModel
+
+## Getting started Aalytics-Zoo InferenceModel
 Define a class extended analytics-zoo `InferenceModel`. It allows to pass modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
 This is the sample of defining a `Resnet50InferenceModel` class. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50InferenceModel.scala) for the whole program.
+
 ```
 package com.intel.analytics.zoo.apps.model.inference.flink
 import java.nio.channels.Channels
@@ -12,16 +15,16 @@ class Resnet50InferenceModel(var concurrentNum: Int = 1, modelType: String, mode
   println(this)
 }
 ```
-
  
-##Getting started Flink program
-###Obtain an execution environment 
+## Getting started Flink program
+
+### Obtain an execution environment 
 The `StreamExecutionEnvironment` is the context in which a streaming program is executed. `getExecutionEnvironment` is the typical function creating an environment to execute your program when the program is invoked on your local machine or a cluster.
 ```
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 ```
-###Create and transform DataStreams
+### Create and transform DataStreams
 `StreamExecutionEnvironment` supports creating a DataStream from a collection using `fromCollection()` method. 
 ```
 import org.apache.flink.streaming.api.datastream.DataStreamUtils
@@ -35,7 +38,7 @@ val data = Arrays.asList(input)
 List(data).asJava
 })
 ```
-###Specifying Transformation Functions
+### Specifying Transformation Functions
 Define a class extends `RichMapFunction`. Three main methods of rich function in this example are open, close and map. `open()` is initialization method. `close()` is called after the last call to the the main working methods. `map()` is the user-defined function, mapping an element from the input data set and to one exact element, ie, `JList[JList[JTensor]]`.
 ```
 import org.apache.flink.api.common.functions.RichMapFunction
@@ -58,18 +61,18 @@ Pass the `RichMapFunctionn` function to a `map` transformation.
 ```
 val resultStream = tensorStream.map(new ModelPredictionMapFunction(modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, scale))
 ``` 
-###Trigger the program execution 
+### Trigger the program execution 
 The program is actually executed when calling `execute()` on the `StreamExecutionEnvironment`. Whether the program is executed locally or submitted on a cluster depends on the type of execution environment.
 ```
 env.execute()
 ```
-###Transform collections of data
+### Transform collections of data
 Create an iterator to iterate over the elements of the DataStream.
 ```
 import org.apache.flink.streaming.api.datastream.DataStreamUtils
 val results = DataStreamUtils.collect(resultStream.javaStream).asScala
 ```
-##How to run the example
+## How to run the example
 ### Requirements
 * JDK 1.8
 * Flink 1.8.1
