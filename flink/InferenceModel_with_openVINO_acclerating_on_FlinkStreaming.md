@@ -10,14 +10,14 @@ There are four parts in this tutorial.
 
 ## Dataset and pre-trained models
 ### Extract dataset and pre-trained model
-You may extract dataset from [ImageNet](http://www.image-net.org/) and pre-trained model from [ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
+Extract dataset from [ImageNet](http://www.image-net.org/) and pre-trained model [ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
 ### Data preparation and pre-processing
 Get image from `resources` folder, and returns an input stream using `classLoader.getResourceAsStream`
 ```
 val classLoader = this.getClass.getClassLoader
 val content = classLoader.getResourceAsStream("n02110063_11239.JPEG")
 ```
-Then, you may pre-process data as you need. This sample provides approach to convert format, resize and normalize.
+Then, you may pre-process data as you need. This sample provides approaches to convert format, resize and normalize.
 ```
 val imageBytes = Stream.continually(content.read).takeWhile(_ != -1).map(_.toByte).toArray
 val imageMat = byteArrayToMat(bytes)
