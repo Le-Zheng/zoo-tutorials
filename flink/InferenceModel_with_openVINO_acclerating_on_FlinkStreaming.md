@@ -10,7 +10,7 @@ There are four parts in this tutorial.
 
 ## Dataset and pre-trained models
 ### Extract dataset and pre-trained model
-Extract dataset from [ImageNet](http://www.image-net.org/). The pre-trained model ResNet50 is [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
+Extract dataset from [ImageNet](http://www.image-net.org/) and pre-trained model ResNet50 from [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
 ### Data preparation and pre-processing
 Get image from `resources` folder, and return an input stream using `classLoader.getResourceAsStream`
 ```
