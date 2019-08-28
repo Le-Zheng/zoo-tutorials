@@ -8,16 +8,22 @@ There are four parts in this tutorial.
 - [Getting started Flink program](#getting-started-flink-program)
 - [Running the example on a local machine or a cluster](#running-the-example-on-a-local-machine-or-a-cluster)
 
-## Datasets and pre-trained models
-* Extracting datasets and pre-trained models
-
-You may extract datasets from [ImageNet](http://www.image-net.org/) and  pre-trained model from [TensorFlow ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
-* Data pre-processing
+## Dataset and pre-trained models
+### Extract dataset and pre-trained model
+You may extract dataset from [ImageNet](http://www.image-net.org/) and pre-trained model from [ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
+### Data preparation and pre-processing
+Get image from `resources` folder, and returns an input stream using `classLoader.getResourceAsStream`
 ```
+val classLoader = this.getClass.getClassLoader
+val content = classLoader.getResourceAsStream("n02110063_11239.JPEG")
+```
+Then, you may pre-process data as you need. This sample provides approach to convert format, resize and normalize.
+```
+val imageBytes = Stream.continually(content.read).takeWhile(_ != -1).map(_.toByte).toArray
 val imageMat = byteArrayToMat(bytes)
-val imageCent = centerCrop(imageMat, cropWidth, cropHeight)
+val imageCent = centerCrop(imageMat, 224, 224)
 val imageTensor = matToNCHWAndRGBTensor(imageCent)
-imageTensor
+val imageNormlized = channelScaledNormalize(imageTensor)
 ```
 ## Getting started Analytics-Zoo InferenceModel
 Define a class extended analytics-zoo `InferenceModel`. It allows passing modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
@@ -27,7 +33,7 @@ This is the sample of defining a `Resnet50InferenceModel` class. See more detail
 class Resnet50InferenceModel(var concurrentNum: Int = 1, modelType: String, modelBytes: Array[Byte], inputShape: Array[Int], ifReverseInputChannels: Boolean, meanValues: Array[Float], scale: Float) 
 extends InferenceModel(concurrentNum) with Serializable {
   doLoadTF(null, modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, scale)
-}
+  }
 }
 ```
 
@@ -62,6 +68,7 @@ extends RichMapFunction[JList[JList[JTensor]], JList[JList[JTensor]]] {
   override def map(in: JList[JList[JTensor]]): JList[JList[JTensor]] = {
     resnet50InferenceModel.doPredict(in)
   }
+}
 ``` 
 Pass the `RichMapFunctionn` function to a `map` transformation.
 ```
