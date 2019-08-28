@@ -4,13 +4,14 @@
 
 There are four parts in this tutorial.
 - [Datasets and pre-trained models](#datasets-and-pre-trained-models)
-- [Getting started Aalytics-Zoo InferenceModel](#getting-started-analytics-zoo-inferenceModel) 
+- [Getting started Analytics-Zoo InferenceModel](#getting-started-analytics-zoo-inferencemodel) 
 - [Getting started Flink program](#getting-started-flink-program)
 - [Running the example on a local machine or a cluster](#running-the-example-on-a-local-machine-or-a-cluster)
 
 ## Datasets and pre-trained models
 * Extracting datasets and pre-trained models
-You may extract datasets from [ImageNet](http://www.image-net.org/). In this sample, the pre-trained model is [TensorFlow ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
+
+You may extract datasets from [ImageNet](http://www.image-net.org/) and  pre-trained model from [TensorFlow ResNet50](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz) 
 * Data pre-processing
 ```
 val imageMat = byteArrayToMat(bytes)
@@ -18,7 +19,7 @@ val imageCent = centerCrop(imageMat, cropWidth, cropHeight)
 val imageTensor = matToNCHWAndRGBTensor(imageCent)
 imageTensor
 ```
-## Getting started Aalytics-Zoo InferenceModel
+## Getting started Analytics-Zoo InferenceModel
 Define a class extended analytics-zoo `InferenceModel`. It allows passing modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
 This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50InferenceModel.scala).
 
