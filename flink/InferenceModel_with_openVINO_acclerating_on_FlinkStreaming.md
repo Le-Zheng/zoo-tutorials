@@ -1,5 +1,5 @@
 # Analytics-Zoo InferenceModel with OpenVINO accelerating on Flink Streaming 
-This is the example of streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel and OpenVINO backend to accelerate prediction. See [here](https://github.com/Le-Zheng/analytics-zoo/tree/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification) for the whole program.
+This is the example of streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel and OpenVINO backend to accelerate prediction. See [here](https://github.com/intel-analytics/analytics-zoo/tree/master/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification) for the whole program.
 
 There are four parts in this tutorial.
 - [Dataset and pre-trained models](#dataset-and-pre-trained-models)
@@ -26,7 +26,7 @@ val imageNormlized = channelScaledNormalize(imageTensor)
 ```
 ## Getting started Analytics-Zoo InferenceModel
 Define a class extended analytics-zoo `InferenceModel`. As we use OpenVINO backend in this example, it allows passing and loading parameters to convert to OpenVINO model. 
-This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/Le-Zheng/analytics-zoo/blob/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification/Resnet50InferenceModel.scala).
+This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/intel-analytics/analytics-zoo/blob/master/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification/Resnet50InferenceModel.scala).
 
 ```
 class Resnet50InferenceModel(var concurrentNum: Int = 1, modelType: String, modelBytes: Array[Byte], inputShape: Array[Int], ifReverseInputChannels: Boolean, meanValues: Array[Float], scale: Float) 
