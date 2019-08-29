@@ -1,4 +1,5 @@
 # Analytics-Zoo InferenceModel with OpenVINO accelerating on Flink Streaming 
+Analytics-zoo provides Inference Model package for speeding up prediction with deep learning models of Analytics Zoo, Caffe, Tensorflow and OpenVINO Intermediate Representation(IR).. 
 This is the example of streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel and OpenVINO backend to accelerate prediction. See [here](https://github.com/intel-analytics/analytics-zoo/tree/master/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification) for the whole program.
 
 There are four parts in this tutorial.
