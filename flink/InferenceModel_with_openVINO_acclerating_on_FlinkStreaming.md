@@ -2,7 +2,7 @@
 This is the example of streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel and OpenVINO backend to accelerate prediction. See [here](https://github.com/Le-Zheng/analytics-zoo/tree/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification) for the whole program.
 
 There are four parts in this tutorial.
-- [Datasets and pre-trained models](#datasets-and-pre-trained-models)
+- [Dataset and pre-trained models](#dataset-and-pre-trained-models)
 - [Getting started Analytics-Zoo InferenceModel](#getting-started-analytics-zoo-inferencemodel) 
 - [Getting started Flink program](#getting-started-flink-program)
 - [Running the example on a local machine or a cluster](#running-the-example-on-a-local-machine-or-a-cluster)
