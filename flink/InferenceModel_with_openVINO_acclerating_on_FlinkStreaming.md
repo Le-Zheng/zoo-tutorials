@@ -1,6 +1,5 @@
-# Analytics-Zoo InferenceModel with openVINO accelerating  on Flink Streaming 
-
-`model-inference-flink` is the model inference in batch and streaming with flink. This is the example of batch and streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel to accelerate prediction. See [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/ImageClassificationStreaming.scala) for the whole program.
+# Analytics-Zoo InferenceModel with OpenVINO accelerating on Flink Streaming 
+This is the example of streaming with Flink and Resnet50 model, as well as using Analytics-Zoo InferenceModel and OpenVINO backend to accelerate prediction. See [here](https://github.com/Le-Zheng/analytics-zoo/tree/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification) for the whole program.
 
 There are four parts in this tutorial.
 - [Datasets and pre-trained models](#datasets-and-pre-trained-models)
@@ -10,14 +9,14 @@ There are four parts in this tutorial.
 
 ## Dataset and pre-trained models
 ### Extract dataset and pre-trained model
-Extract dataset from [ImageNet](http://www.image-net.org/) and pre-trained model ResNet50 from [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
+In this example, we extract image ImageNet, and save it in `resources` folder. The pre-trained model ResNet50 can be obtained from [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
 ### Data preparation and pre-processing
 Get image from `resources` folder, and return an input stream using `classLoader.getResourceAsStream`
 ```
 val classLoader = this.getClass.getClassLoader
 val content = classLoader.getResourceAsStream("n02110063_11239.JPEG")
 ```
-Then, you may pre-process data as you need. In this sample, `trait ImageProcessing`  provides approaches to convert format, resize and normalize. The input stream is supposed to be converted as below.
+Then, you may pre-process data as you need. In this sample, `trait ImageProcessing`  provides approaches to convert format, resize and normalize. The input stream is supposed to be converted as below:
 ```
 val imageBytes = Stream.continually(content.read).takeWhile(_ != -1).map(_.toByte).toArray
 val imageMat = byteArrayToMat(bytes)
@@ -26,8 +25,8 @@ val imageTensor = matToNCHWAndRGBTensor(imageCent)
 val imageNormlized = channelScaledNormalize(imageTensor)
 ```
 ## Getting started Analytics-Zoo InferenceModel
-Define a class extended analytics-zoo `InferenceModel`. It allows passing modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, and scale to convert to openVINO model. And load the whole parameters using `doLoadTF` method.
-This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/glorysdj/analytics-zoo/blob/imflink2/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50InferenceModel.scala).
+Define a class extended analytics-zoo `InferenceModel`. As we use openVINO backend in this example, it allows passing and loading parameters to convert to penVINO model. 
+This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/Le-Zheng/analytics-zoo/blob/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification/Resnet50InferenceModel.scala).
 
 ```
 class Resnet50InferenceModel(var concurrentNum: Int = 1, modelType: String, modelBytes: Array[Byte], inputShape: Array[Int], ifReverseInputChannels: Boolean, meanValues: Array[Float], scale: Float) 
@@ -44,16 +43,16 @@ The first step is to create an execution environment. The `StreamExecutionEnviro
 val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 ```
 ### Create and transform DataStreams
-`StreamExecutionEnvironment` supports creating a DataStream from a collection using `fromCollection()` method. 
+`StreamExecutionEnvironment` provides several stream sources function. As we simulate one hundred inputs and use `List` to hold them, we can create a DataStream from a collection using `fromCollection()` method. 
 ```
 val dataStream: DataStream[Array[Float]] =  env.fromCollection(inputs)
 val tensorStream: DataStream[JList[JList[JTensor]]] = dataStream.map(value => {
-val input = new JTensor(value, Array(1, 224, 224, 3))
-val data = Arrays.asList(input)
-List(data).asJava
+  val input = new JTensor(value, Array(1, 224, 224, 3))
+  val data = Arrays.asList(input)
+  List(data).asJava
 })
 ```
-### Specifying Transformation Functions
+### Specify Transformation Functions
 Define a class extends `RichMapFunction`. Three main methods of rich function in this example are open, close and map. `open()` is initialization method. `close()` is called after the last call to the main working methods. `map()` is the user-defined function, mapping an element from the input data set and to one exact element, ie, `JList[JList[JTensor]]`.
 ```
 class ModelPredictionMapFunction(modelType: String, modelBytes: Array[Byte], inputShape: Array[Int], ifReverseInputChannels: Boolean, meanValues: Array[Float], scale: Float) 
@@ -79,7 +78,7 @@ The program is actually executed only when calling `execute()` on the `StreamExe
 ```
 env.execute()
 ```
-### Transform collections of data
+### Collect final results
 Create an iterator to iterate over the elements of the DataStream.
 ```
 val results = DataStreamUtils.collect(resultStream.javaStream).asScala
