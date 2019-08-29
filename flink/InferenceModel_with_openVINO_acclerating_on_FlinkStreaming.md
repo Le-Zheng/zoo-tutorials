@@ -9,7 +9,7 @@ There are four parts in this tutorial.
 
 ## Dataset and pre-trained models
 ### Extract dataset and pre-trained model
-In this example, we extract image ImageNet, and save it in `resources` folder. The pre-trained model ResNet50 can be obtained from [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
+In this example, we extract image from ImageNet and save it in `resources` folder. The pre-trained model ResNet50 can be obtained from [here](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz). 
 ### Data preparation and pre-processing
 Get image from `resources` folder, and return an input stream using `classLoader.getResourceAsStream`
 ```
@@ -25,7 +25,7 @@ val imageTensor = matToNCHWAndRGBTensor(imageCent)
 val imageNormlized = channelScaledNormalize(imageTensor)
 ```
 ## Getting started Analytics-Zoo InferenceModel
-Define a class extended analytics-zoo `InferenceModel`. As we use openVINO backend in this example, it allows passing and loading parameters to convert to penVINO model. 
+Define a class extended analytics-zoo `InferenceModel`. As we use OpenVINO backend in this example, it allows passing and loading parameters to convert to OpenVINO model. 
 This is the sample of defining a `Resnet50InferenceModel` class. See more details [here](https://github.com/Le-Zheng/analytics-zoo/blob/test/apps/model-inference-examples/model-inference-flink/src/main/scala/com/intel/analytics/zoo/apps/model/inference/flink/Resnet50ImageClassification/Resnet50InferenceModel.scala).
 
 ```
