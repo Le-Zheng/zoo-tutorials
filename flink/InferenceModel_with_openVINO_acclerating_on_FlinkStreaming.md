@@ -19,7 +19,7 @@ val content = classLoader.getResourceAsStream("n02110063_11239.JPEG")
 Then, you may pre-process data as you need. In this sample, `trait ImageProcessing`  provides approaches to convert format, resize and normalize. The input stream is supposed to be converted as below:
 ```
 val imageBytes = Stream.continually(content.read).takeWhile(_ != -1).map(_.toByte).toArray
-val imageMat = byteArrayToMat(bytes)
+val imageMat = byteArrayToMat(imageBytes)
 val imageCent = centerCrop(imageMat, 224, 224)
 val imageTensor = matToNCHWAndRGBTensor(imageCent)
 val imageNormlized = channelScaledNormalize(imageTensor)
