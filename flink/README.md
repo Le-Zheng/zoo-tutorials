@@ -138,7 +138,7 @@ val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnv
 
 ```scala
 # dataStream
-val dataStream: DataStream[Array[Float]] = env.fromCollection(inputs)
+val dataStream: DataStream[JList[JList[JTensor]]] = env.fromCollection(inputs)
 ```
 
 #### 3. Specify transformation functions
