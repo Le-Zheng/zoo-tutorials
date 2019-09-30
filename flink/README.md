@@ -10,7 +10,7 @@ There are three main sections in this tutorial.
 
 [Getting started the Flink program](#Getting-started-the-Flink-program)
 
-### Loading data
+## Loading data
 
 In this tutorial, we will use the **ImageNet** dataset. It has 1000 classes. The images in ImageNet are various sizes. Let us show some of the predicting images.
 
@@ -51,7 +51,7 @@ val inputs = fileList.map(file => {
     })
 ```
 
-### Defining an Analytics Zoo InferenceModel
+## Defining an Analytics Zoo InferenceModel
 
 Analytics Zoo provides Inference Model package for speeding up prediction with deep learning models of Analytics Zoo, Caffe, Tensorflow and OpenVINO Intermediate Representation(IR). You may see [here](https://github.com/intel-analytics/analytics-zoo/blob/b98d97a7eb2f8c88bcaa34ee135077da0aac091d/zoo/src/main/scala/com/intel/analytics/zoo/pipeline/inference/InferenceModel.scala) for more details of Inference Model APIs.
 
@@ -114,7 +114,7 @@ extends InferenceModel(concurrentNum) with Serializable {
 }
 ```
 
-### Getting started the Flink program
+## Getting started the Flink program
 
 We will do the following steps in order:
 
@@ -123,8 +123,9 @@ We will do the following steps in order:
 [3. Specify transformation functions](#3-specify-transformation-functions)  
 [4. Trigger the program execution](#4-trigger-the-program-execution)    
 [5. Collect final results](#5-collect-final-results)
+[6. Run the example on a local machine or a cluster](#6-Run-the-example-on-a-local-machine-or-a-cluster)
 
-#### 1. Obtain an execution environment
+### 1. Obtain an execution environment
 
 The first step is to create an execution environment. The `StreamExecutionEnvironment` is the context in which a streaming program is executed. `getExecutionEnvironment` is the typical function creating an environment to execute your program when the program is invoked on your local machine or a cluster.
 
@@ -132,7 +133,7 @@ The first step is to create an execution environment. The `StreamExecutionEnviro
 val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 ```
 
-#### 2. Create and transform DataStreams
+### 2. Create and transform DataStreams
 
 `StreamExecutionEnvironment` provides several stream sources function. As we use `List` to hold the inputs, we can create a DataStream from a collection using `fromCollection()` method.
 
@@ -141,7 +142,7 @@ val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnv
 val dataStream: DataStream[JList[JList[JTensor]]] = env.fromCollection(inputs)
 ```
 
-#### 3. Specify transformation functions
+### 3. Specify transformation functions
 
 Define a class extends `RichMapFunction`. Three main methods of rich function in this example are open, close and map. `open()` is initialization method. `close()` is called after the last call to the main working methods. `map()` is the user-defined function, mapping an element from the input data set and to one exact element, ie, `JList[JList[JTensor]]`.
 
@@ -175,7 +176,7 @@ Pass the `RichMapFunctionn` function to a `map` transformation.
 val resultStream = dataStream.map(new ModelPredictionMapFunction(modelType, modelBytes, inputShape, ifReverseInputChannels, meanValues, scale))
 ```
 
-#### 4. Trigger the program execution
+### 4. Trigger the program execution
 
 The program is actually executed only when calling `execute()` on the `StreamExecutionEnvironment`. Whether the program is executed locally or submitted on a cluster depends on the type of execution environment.
 
@@ -183,7 +184,7 @@ The program is actually executed only when calling `execute()` on the `StreamExe
 env.execute()
 ```
 
-#### 5. Collect final results
+### 5. Collect final results
 
 Finally, create an iterator to iterate over the elements of the DataStream.
 
@@ -208,7 +209,7 @@ lens cap, lens cover
 
 At this step, we complete the whole program. Let's start how to run the example on a cluster.
 
-#### 6. Run the example on a local machine or a cluster
+### 6. Run the example on a local machine or a cluster
 
 - ##### Build the project
 
