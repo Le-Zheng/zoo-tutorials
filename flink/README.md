@@ -14,7 +14,7 @@ There are three main sections in this tutorial.
 
 In this tutorial, we will use the **ImageNet** dataset. It has 1000 classes. The images in ImageNet are various sizes. Let us show some of the predicting images.
 
-![img](https://i.loli.net/2019/09/21/Q9gCTVjzv3m5sFI.png)
+<img src="https://i.loli.net/2019/09/21/Q9gCTVjzv3m5sFI.png" alt="" align=center>
 
 Let us load images from the image folder.
 
@@ -119,9 +119,8 @@ extends InferenceModel(concurrentNum) with Serializable {
 We will do the following steps in order:
 
 [1. Obtain an execution environment](#1-obtain-an-execution-environment)  
-[2. Create and transform DataStreams](#2-create-and-transform-datastreams)
-
-[3. Specify transformation functions](#3-specify-transformation-functions)
+[2. Create and transform DataStreams](#2-create-and-transform-datastreams)  
+[3. Specify transformation functions](#3-specify-transformation-functions)  
 [4. Trigger the program execution](#4-trigger-the-program-execution)    
 [5. Collect final results](#5-collect-final-results)
 
