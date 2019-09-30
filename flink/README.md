@@ -7,12 +7,12 @@ There are three main sections in this tutorial.
 - [Loading data](#Loading-data)  
 - [Defining an Analytics Zoo InferenceModel](#Defining-an-Analytics-Zoo-InferenceModel)  
 - [Getting started the Flink program](#Getting-started-the-Flink-program)  
-    [1. Obtain an execution environment](#1-obtain-an-execution-environment)  
-    [2. Create and transform DataStreams](#2-create-and-transform-datastreams)  
-    [3. Specify transformation functions](#3-specify-transformation-functions)  
-    [4. Trigger the program execution](#4-trigger-the-program-execution)    
-    [5. Collect final results](#5-collect-final-results)   
-    [6. Run the example on a local machine or a cluster](#6-Run-the-example-on-a-local-machine-or-a-cluster)
+    - [1. Obtain an execution environment](#1-obtain-an-execution-environment)  
+    - [2. Create and transform DataStreams](#2-create-and-transform-datastreams)  
+    - [3. Specify transformation functions](#3-specify-transformation-functions)  
+    - [4. Trigger the program execution](#4-trigger-the-program-execution)    
+    - [5. Collect final results](#5-collect-final-results)   
+    - [6. Run the example on a local machine or a cluster](#6-Run-the-example-on-a-local-machine-or-a-cluster)
 
 ## Loading data
 
