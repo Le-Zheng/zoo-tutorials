@@ -14,7 +14,7 @@ There are three main sections in this tutorial.
 
 In this tutorial, we will use the **ImageNet** dataset. It has 1000 classes. The images in ImageNet are various sizes. Let us show some of the predicting images.
 
-<img src="https://i.loli.net/2019/09/21/Q9gCTVjzv3m5sFI.png" alt="" align=center>
+<img src="https://i.loli.net/2019/09/21/Q9gCTVjzv3m5sFI.png" width="" height="" alt="" align=center>
 
 Let us load images from the image folder.
 
