@@ -118,17 +118,11 @@ extends InferenceModel(concurrentNum) with Serializable {
 
 We will do the following steps in order:
 
-1. Obtain an execution environment
-
-2. Create and transform DataStreams
-
-3. Specify Transformation Functions
-
-4. Trigger the program execution
-
-5. Collect final results
-
-6. Run the example on a local machine or a cluster
+[1. Obtain an execution environment](#1-obtain-an-execution-environment)
+[2. Create and transform DataStreams](#2-create-and-transform-datastreams)
+[3. Specify transformation functions](#3-specify-transformation-functions)
+[4. Trigger the program execution](#4-trigger-the-program-execution)
+[5. Collect final results](#5-collect-final-results)
 
 #### 1. Obtain an execution environment
 
